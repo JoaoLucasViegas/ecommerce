@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        All Elle Incs
+    </title>
+</head>
+<body>
+
+    <center>
+        <h1>
+            CARRINHO DE COMPRAS!
+        </h1>
+
+        <div id="cupom"></div>
+    </center>
+
+    <script>
+        class Pedido {
+            constructor(id, nome, preco, quantidade) {
+                this.id = id;
+                this.nome = nome;
+                this.preco = preco;
+                this.quantidade = quantidade;
+            }
+        }
+
+        let produtos_carrinho = [];
+
+        function renderizar_cupom() {
+            let subtotal = 0.0;
+            let cupom_div = document.getElementById("cupom");
+            cupom_div.innerHTML += '<h2> PRODUTO ·················· PRECO</h2>';
+            cupom_div.innerHTML += '<h2> ······································· </h2><br><br>';
+            produtos_carrinho.forEach(produto => {
+                let texto = (produto.quantidade > 1) ? `X <t> ${produto.quantidade}` : "";
+                let elemento = `
+                    <h2>${produto.nome} ·············· R$ ${produto.preco} ${texto}</h2>
+                `;
+                cupom_div.innerHTML += elemento;
+
+                subtotal += produto.preco * produto.quantidade;
+            });
+            
+            cupom_div.innerHTML += '<br><br><h2> ········································ </h2>';
+            cupom_div.innerHTML += `<h2> TOTAL ················· R$ ${subtotal}</h2>`;
+        }
+
+        window.onload = () => {
+            console.log("Loading List!");
+            console.log(produtos_carrinho);
+            produtos_carrinho = JSON.parse(sessionStorage.getItem("produtos_carrinho"));
+            console.log("List loaded!");
+            console.log(produtos_carrinho);
+            renderizar_cupom();
+        };
+    </script>
+    
+</body>
+</html>
