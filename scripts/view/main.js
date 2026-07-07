@@ -67,7 +67,7 @@ function pedir(id, nome_produto, preco) {
 function abrir_carrinho() {
     sessionStorage.setItem("produtos_carrinho", JSON.stringify(lista_de_pedidos));
     sessionStorage.setItem("user", JSON.stringify({"name": "Walter Woollet", "money": wallet_money}));
-    window.location.assign("/carrinho.html");
+    window.location.assign("carrinho.html");
 }
 
 window.onpageshow = () => {
