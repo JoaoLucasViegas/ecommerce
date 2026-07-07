@@ -24,11 +24,12 @@ function gerarComponente() {
     const id = "pedido_" + (Math.random() * 10);
 
     return `    
+        <br>
         <div>
             <img src="${imagem}" width="192px" height="128px">
-            <h2>${texto}</h2>
-            <h3>R$ ${preco}</h3>
-            <input id="${id}"type="number" min="1" step="1" title="Quantidade" style="width: 30px;" value="1">
+            <h3>${texto}</h3>
+            <h4>R$ ${preco}</h4>
+            <input id="${id}"type="number" min="1" step="1" title="quantidade" style="width: 60px;" value="1">
             <button onclick="pedir('${id}','${texto}', ${preco})">PEDIR</button>
         </div><br>
     `;
@@ -42,15 +43,30 @@ for (let idx = 1; idx <= quantidade_items_lista; idx++) {
     document.getElementById("lista").innerHTML += gerarComponente();
 }
 
+let wallet_money = 500.0 //Simulacro de acesso a uma carteira virtual ou dados bancários no sistema
+
 function pedir(id, nome_produto, preco) {
-    let quantidade = document.getElementById(id);
-    alert(`A compra de ${nome_produto} foi efetuada!`);
-    lista_de_pedidos.push(new Pedido(id, nome_produto, preco, quantidade.value));
+    let quantidade_component = document.getElementById(id);
+    alert(`${quantidade_component.value}x unidade(s) de ${nome_produto} adicionado(s) ao carrinho de compras!`);
+    let was_updating = false
+    lista_de_pedidos.forEach(element => {
+        if (element.id == id) {
+            was_updating = true;
+            console.log(`Item repetido: ${nome_produto}`)
+            element.quantidade += parseFloat(quantidade_component.value);
+            return;
+        }
+    });
+    if (was_updating)
+        return;
+    console.log(`Novo item: ${nome_produto}`)
+    lista_de_pedidos.push(new Pedido(id, nome_produto, preco, parseFloat(quantidade_component.value)));
     //console.log(lista_de_pedidos);
 }
 
 function abrir_carrinho() {
     sessionStorage.setItem("produtos_carrinho", JSON.stringify(lista_de_pedidos));
+    sessionStorage.setItem("user", JSON.stringify({"name": "Walter Woollet", "money": wallet_money}));
     window.location.assign("/carrinho.html");
 }
 
@@ -63,4 +79,15 @@ window.onpageshow = () => {
     } /*else {
         //alert("Found nothing!")
     }*/
+
+    let walter = JSON.parse(sessionStorage.getItem("user"));
+    if (walter) {
+        // alert(JSON.stringify(walter))
+        wallet_money = walter.money;
+        // alert(`TF dude! ${wallet_money}`)
+    }
+    let wallet_info_component = document.getElementById("wallet_info")
+    if (wallet_info_component) {
+        wallet_info_component.textContent = `Saldo carteira: R$ ${wallet_money.toFixed(2)}`;
+    }
 }

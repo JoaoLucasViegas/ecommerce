@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+
+        All Elle Incs
+
+    </title>
+</head>
+<body bgcolor="#1f1f1f" text="white">
+    <center>
+        <br>
+        <img src="assets/pix_logo.webp" width="512px" height="auto" style="padding-top: 5%;">
+        <h1> Transferência realizada com sucesso! </h1>
+    </center>
+</body>
+<script>
+    let produtos_carrinho = [];
+    sessionStorage.setItem("produtos_carrinho", JSON.stringify(produtos_carrinho));  
+    window.onload = () => {
+        let saldo = JSON.parse(sessionStorage.getItem("novo_saldo"));
+        let user_data = JSON.parse(sessionStorage.getItem("user"))
+        user_data.money = saldo;
+        sessionStorage.setItem("user", JSON.stringify(user_data));
+        window.location.assign("index.html");
+        alert("Pagamento Realizado!");
+    }
+</script>
+</html>
