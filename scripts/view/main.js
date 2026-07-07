@@ -25,12 +25,12 @@ function gerarComponente() {
 
     return `    
         <br>
-        <div>
+        <div class="produto">
             <img src="${imagem}" width="192px" height="128px">
             <h3>${texto}</h3>
             <h4>R$ ${preco}</h4>
-            <input id="${id}"type="number" min="1" step="1" title="quantidade" style="width: 60px;" value="1">
-            <button onclick="pedir('${id}','${texto}', ${preco})">PEDIR</button>
+            Unit. <input id="${id}"type="number" min="1" step="1" title="quantidade" style="width: 60px;" value="1">
+            <button onclick="pedir('${id}','${texto}', ${preco})">Pedir</button>
         </div><br>
     `;
 }
@@ -38,7 +38,7 @@ function gerarComponente() {
 
 let lista_de_pedidos = [];
 
-const quantidade_items_lista = 4;
+const quantidade_items_lista = 12;
 for (let idx = 1; idx <= quantidade_items_lista; idx++) {
     document.getElementById("lista").innerHTML += gerarComponente();
 }

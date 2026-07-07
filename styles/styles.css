@@ -1,0 +1,83 @@
+body {
+    display: flow-root;
+    color: black;
+    background-color: beige;
+    font-weight: bolder;
+    font-family: cursive;
+    text-align: center;
+    align-content: center;
+}
+button {
+    cursor: pointer;
+    background-color: tomato;
+    color: beige;
+    border: none;
+    border-radius: 10px;
+    padding: 2%;
+    align-items: center;
+    width: 256px;
+    height: fit-content;
+    font-weight: bolder;
+    text-align: center;
+}
+
+#lista {
+    font-family: cursive;
+    font-weight: bolder;
+    font-variant: small-caps;
+
+    margin-top: 5%;
+    display: grid;
+    grid-template-columns: repeat(6, 0fr);
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+    vertical-align: middle;
+    text-align: center;
+    gap: 20px;
+}
+
+.produto {
+    background-color: aliceblue;
+    width: fit-content;
+    height: fit-content;
+    padding: 4%;
+    border-radius: 8px;
+    border: solid wheat 1px;
+    /*margin: 12px;*/
+}
+.produto input {
+    border-radius: 30px;
+    background-color: teal;
+    color: aliceblue;
+    border: none;
+    width: fit-content;
+    height: fit-content;
+}
+.produto h3 {
+    margin: 0px;
+    font-weight: bolder;
+    font-family: monospace;
+    font-size: xx-large;
+}
+.produto h4 {
+    margin: 0px;
+    font-family: fantasy;
+    letter-spacing: 1px;
+    font-size: x-large;
+    color: orangered;
+    font-variant: small-caps;
+}
+.produto img { 
+    width: fit-content;
+    border-radius: 4px;
+}
+.produto button {
+    cursor: pointer;
+    font-weight: bolder;
+    padding: 4%;
+    margin-top: 12px;
+    border-radius: 14px;
+    background-color: tomato;
+}
