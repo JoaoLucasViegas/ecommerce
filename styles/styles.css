@@ -13,10 +13,10 @@ button {
     color: beige;
     border: none;
     border-radius: 10px;
-    padding: 2%;
+    padding: 1%;
     align-items: center;
     width: 256px;
-    height: fit-content;
+    height: auto;
     font-weight: bolder;
     text-align: center;
 }
@@ -35,7 +35,7 @@ button {
     align-self: center;
     vertical-align: middle;
     text-align: center;
-    gap: 20px;
+    gap: 16px;
 }
 
 .produto {
@@ -44,7 +44,7 @@ button {
     height: fit-content;
     padding: 4%;
     border-radius: 8px;
-    border: solid wheat 1px;
+    border: solid wheat 2px;
     /*margin: 12px;*/
 }
 .produto input {
@@ -52,8 +52,8 @@ button {
     background-color: teal;
     color: aliceblue;
     border: none;
-    width: fit-content;
-    height: fit-content;
+    width: 100px;
+    text-align: center;
 }
 .produto h3 {
     margin: 0px;
