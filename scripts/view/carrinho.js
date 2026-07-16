@@ -1,79 +1,272 @@
-
 let produtos_carrinho = [];
-let total = 0.0;
+let total = 0;
 
-function renderizar_cupom() {
-    let subtotal = 0.0;
-    let cupom_div = document.getElementById("cupom");
-    cupom_div.innerHTML = "";
-    cupom_div.innerHTML += '<h2> PRODUTO ······························· PRECO</h2>';
-    cupom_div.innerHTML += '<h2> ··························································· </h2><br><br>';
-    produtos_carrinho.forEach((produto, idx) => {
-        console.log(produto)
-        let texto = (produto.quantidade > 1) ? `x <t> ${produto.quantidade}` : "";
-        let elemento = `
-            <h2>${produto.nome} ······················ R$ ${produto.preco} ${texto}
-            ·
-            <button onclick="remover_item(${idx})")>Remover</button> 
-            </h2>
+/* ===========================================
+    RENDER
+=========================================== */
+
+function renderizarCarrinho() {
+
+    const cupom = document.getElementById("cupom");
+
+    if (!cupom)
+        return;
+
+    let subtotal = 0;
+
+    let html = "";
+
+    if (produtos_carrinho.length === 0) {
+
+        cupom.innerHTML = `
+
+            <div class="cart-total">
+
+                <h2>
+
+                    Seu carrinho está vazio.
+
+                </h2>
+
+                <p>
+
+                    Adicione alguns produtos para continuar.
+
+                </p>
+
+            </div>
+
         `;
-        cupom_div.innerHTML += elemento;
 
-        subtotal += produto.preco * produto.quantidade;
+        return;
+
+    }
+
+    produtos_carrinho.forEach((produto, indice) => {
+
+        const valor = produto.preco * produto.quantidade;
+
+        subtotal += valor;
+
+        html += `
+
+            <div class="cart-item">
+
+                <div class="cart-info">
+
+                    <h3>
+
+                        ${produto.nome}
+
+                    </h3>
+
+                    <p>
+
+                        Quantidade:
+                        <strong>${produto.quantidade}</strong>
+
+                    </p>
+
+                    <p>
+
+                        Unitário:
+                        <strong>
+
+                            R$ ${produto.preco.toFixed(2)}
+
+                        </strong>
+
+                    </p>
+
+                </div>
+
+                <div class="cart-actions">
+
+                    <h3>
+
+                        R$ ${valor.toFixed(2)}
+
+                    </h3>
+
+                    <button
+
+                        onclick="removerItem(${indice})">
+
+                        Remover
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
     });
-    
-    cupom_div.innerHTML += '<br><br><h2> ··························································· </h2>';
-    cupom_div.innerHTML += `<h2> TOTAL ················· R$ ${subtotal.toFixed(2)}</h2>`;
 
-    if (subtotal <= 0.0) {
-        cupom_div.innerHTML += `
-            <button type="submit" onclick="pagar()" disabled="true" style="background-color: gray; color: black; border-radius: 30px; border: green solid 2px; padding: 2%; font-size: large; font-weight: bolder; width: 400px; height: max-content; justify-content: center;"> Pagar no PIX </button>
-        `;
-    } else {
-        cupom_div.innerHTML += `
-            <button type="submit" onclick="pagar()" style="background-color: greenyellow; color: black; border-radius: 30px; border: green solid 2px; padding: 2%; font-size: large; font-weight: bolder; width: 400px; height: max-content; justify-content: center;"> Pagar no PIX </button>
-        `;
-    }
     total = subtotal;
+
+    html += `
+
+        <div class="cart-total">
+
+            <h2>
+
+                Total
+
+            </h2>
+
+            <h1>
+
+                R$ ${subtotal.toFixed(2)}
+
+            </h1>
+
+            <br>
+
+            <button
+
+                class="btn-pay"
+
+                onclick="pagar()"
+
+                ${subtotal <= 0 ? "disabled" : ""}>
+
+                Pagar no PIX
+
+            </button>
+
+        </div>
+
+    `;
+
+    cupom.innerHTML = html;
+
 }
 
-function remover_item(idx) {
-    console.log(`${idx} Hello`);
-    if (produtos_carrinho[idx]) {
-        produtos_carrinho.splice(idx, 1);
-        sessionStorage.setItem("produtos_carrinho", JSON.stringify(produtos_carrinho));
-        load_list_items();
-        console.log("There!")
+/* ===========================================
+    REMOVE
+=========================================== */
+
+function removerItem(indice) {
+
+    produtos_carrinho.splice(indice, 1);
+
+    salvarCarrinho();
+
+    renderizarCarrinho();
+
+}
+
+/* ===========================================
+    STORAGE
+=========================================== */
+
+function salvarCarrinho() {
+
+    sessionStorage.setItem(
+
+        "produtos_carrinho",
+
+        JSON.stringify(produtos_carrinho)
+
+    );
+
+}
+
+function carregarCarrinho() {
+
+    const dados = sessionStorage.getItem(
+
+        "produtos_carrinho"
+
+    );
+
+    if (!dados) {
+
+        produtos_carrinho = [];
+
+        return;
+
     }
-    console.log("World!")
-} 
 
-function load_list_items() {
-    //console.log("Loading List!");
-    //console.log(produtos_carrinho);
-    produtos_carrinho = JSON.parse(sessionStorage.getItem("produtos_carrinho"));
-    //console.log("List loaded!");
-    //console.log(produtos_carrinho);
-    renderizar_cupom();
+    produtos_carrinho = JSON.parse(dados);
+
 }
 
-function voltar_loja() {
-    window.location.assign("index.html");
-}
+/* ===========================================
+    PAGAMENTO
+=========================================== */
 
 function pagar() {
-    let walter_wallet = JSON.parse(sessionStorage.getItem("user"));
-    let saldo = walter_wallet.money - total;
-    if (!walter_wallet)
+
+    const usuario = JSON.parse(
+
+        sessionStorage.getItem("user")
+
+    );
+
+    if (!usuario)
         return;
-    if (saldo <= 0.0) {
-        alert("Saldo Insuficiente!");
+
+    const saldo = usuario.money - total;
+
+    if (saldo < 0) {
+
+        alert(
+
+            "Saldo insuficiente."
+
+        );
+
         return;
+
     }
-    sessionStorage.setItem("novo_saldo", saldo);
-    window.location.assign("pagamento.html");
+
+    sessionStorage.setItem(
+
+        "novo_saldo",
+
+        saldo
+
+    );
+
+    window.location.assign(
+
+        "pagamento.html"
+
+    );
+
 }
 
-window.onpageshow = () => {
-    load_list_items();
-};
+/* ===========================================
+    NAVEGAÇÃO
+=========================================== */
+
+function voltar_loja() {
+
+    window.location.assign(
+
+        "index.html"
+
+    );
+
+}
+
+/* ===========================================
+    LOAD
+=========================================== */
+
+window.addEventListener(
+
+    "load",
+
+    () => {
+
+        carregarCarrinho();
+
+        renderizarCarrinho();
+
+    }
+
+);

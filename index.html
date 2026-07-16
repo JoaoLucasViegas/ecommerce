@@ -1,26 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
 
-        All Elle Incs
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-    </title>
-    <link rel="stylesheet" href="styles/styles.css">
+    <title>All Elle Incs</title>
+
+    <link
+        rel="stylesheet"
+        href="styles/styles.css">
+
 </head>
+
 <body>
 
-    <div id="left_bar_menu">
-        <button id="btn_carrinho" type="submit" onclick="abrir_carrinho()"> 🛒 Carrinho </button>
-        <p id="wallet_info"> Saldo carteira: R$ 0,00 </p>
-    </div>
-    
-    <div id="lista"></div>
+<header>
 
-    <script src="./scripts/model/pedido.js"></script>
-    <script src="./scripts/view/main.js"></script>
-    
+    <div class="logo">
+
+        <h1>🍔 All Elle</h1>
+
+        <p id="wallet_info">
+            Saldo carteira: R$ 0,00
+        </p>
+
+    </div>
+
+    <button
+        id="btn_carrinho"
+        onclick="abrir_carrinho()">
+
+        🛒 Carrinho
+
+    </button>
+
+</header>
+
+<main>
+
+    <section class="hero">
+
+        <h2>
+
+            Escolha seu pedido
+
+        </h2>
+
+        <p>
+
+            Massas, saladas e pratos preparados.
+
+        </p>
+
+    </section>
+
+    <section
+        id="lista"
+        class="produtos">
+
+    </section>
+
+</main>
+
+<script src="./scripts/model/pedido.js"></script>
+<script src="./scripts/view/main.js"></script>
+
 </body>
+
 </html>

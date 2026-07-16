@@ -1,26 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
     <title>
-        All Elle Incs
+
+        Carrinho
+
     </title>
+
+    <link
+        rel="stylesheet"
+        href="styles/styles.css">
+
 </head>
+
 <body>
 
-    <button onclick="voltar_loja()">< Voltar</button>
-    <center>
+<header>
+
+    <div class="logo">
+
         <h1>
-            CARRINHO DE COMPRAS!
+
+            🛒 Carrinho
+
         </h1>
 
-        <div id="cupom"></div>
-        <!--<button type="submit"  onclick="pagar()" disabled="false" style="background-color: greenyellow; color: black; border-radius: 30px; border: green solid 2px; padding: 2%; font-size: large; font-weight: bolder; width: 400px; height: max-content; justify-content: center;"> Pagar no PIX </button>-->
-    </center>
+        <p>
 
-    <script src="./scripts/model/pedido.js"></script>
-    <script src="scripts/view/carrinho.js"></script>
-    
+            Confira seus produtos antes do pagamento.
+
+        </p>
+
+    </div>
+
+    <button
+        onclick="voltar_loja()">
+
+        ← Continuar comprando
+
+    </button>
+
+</header>
+
+<main class="cart-page">
+
+    <section
+        id="cupom"
+        class="cart-list">
+
+    </section>
+
+</main>
+
+<script src="./scripts/model/pedido.js"></script>
+<script src="./scripts/view/carrinho.js"></script>
+
 </body>
+
 </html>
